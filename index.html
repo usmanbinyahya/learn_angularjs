@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="Learn01">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+
+<body ng-controller="MainController as main">
+    <h1>{{ main.message }}</h1>
+
+    <p>1 + 2 = {{ 1+2 }}</p>
+
+    <div>
+        <div>First Name : {{ main.person.firstName | uppercase }}</div>
+        <div>Last Name : {{ main.person.lastName }}</div>
+        <div>
+            <img src="{{ main.person.imageSrc }}" title="{{ main.person.firstName }} {{ main.person.lastName }}" width="50" height="50" />
+        </div>
+    </div>
+
+    <div ng-app="myApp" ng-controller="myCtrl as my">
+        First Name: <input type="text" ng-model="my.firstName"><br>
+        Last Name: <input type="text" ng-model="my.lastName"><br>
+        <br>
+        Full Name: {{my.firstName + " " + my.lastName }}
+
+        <ul>
+            <li ng-repeat="x in my.names | orderBy:'country'">
+                {{ x.name + ', ' + x.country }}
+            </li>
+        </ul>
+
+        <p>
+            <button ng-disabled="mySwitch" ng-click="my.eventOnClick()">Click Me!</button>
+        </p>
+
+        <p>
+            <input type="checkbox" ng-model="mySwitch">Button
+        </p>
+    </div>
+
+    <div ng-app="myApp" ng-controller="customersCtrl as cust">
+        <table border="1">
+            <tr ng-repeat="x in cust.names | orderBy : 'Country'">
+                <td>{{ $index + 1 }}</td>
+                <td>{{ x.Name }}</td>
+                <td>{{ x.Country | uppercase }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div ng-include="'test_inc.html'"></div>
+
+    <h2>Validation Example</h2>
+
+    <form ng-app="myApp" ng-controller="validateCtrl as valCtrl" name="myForm" novalidate>
+        <p>Username:<br>
+            <input type="text" name="user" ng-model="valCtrl.user" required>
+            <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+                <span ng-show="myForm.user.$error.required">Username is required.</span>
+            </span>
+        </p>
+        <p>Email:<br>
+            <input type="email" name="email" ng-model="valCtrl.email" required>
+            <span style="color:red" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+                <span ng-show="myForm.email.$error.required">Email is required.</span>
+                <span ng-show="myForm.email.$error.email">Invalid email address.</span>
+            </span>
+        </p>
+        <p>
+            <input type="submit" ng-disabled="myForm.user.$dirty && myForm.user.$invalid || myForm.email.$dirty && myForm.email.$invalid">
+        </p>
+    </form>
+
+    <!--<script src="js/app.js"></script>-->
+    <script src="js/myModule.js"></script>
+    <script src="js/myApp.js"></script>
+</body>
+
+</html>
